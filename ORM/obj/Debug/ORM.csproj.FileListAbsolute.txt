@@ -1,0 +1,6 @@
+C:\Users\vgrit\source\repos\WPF_task_new_level_2\ORM\bin\Debug\ORM.dll
+C:\Users\vgrit\source\repos\WPF_task_new_level_2\ORM\bin\Debug\ORM.pdb
+C:\Users\vgrit\source\repos\WPF_task_new_level_2\ORM\obj\Debug\ORM.csprojAssemblyReference.cache
+C:\Users\vgrit\source\repos\WPF_task_new_level_2\ORM\obj\Debug\ORM.csproj.CoreCompileInputs.cache
+C:\Users\vgrit\source\repos\WPF_task_new_level_2\ORM\obj\Debug\ORM.dll
+C:\Users\vgrit\source\repos\WPF_task_new_level_2\ORM\obj\Debug\ORM.pdb

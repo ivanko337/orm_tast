@@ -1,0 +1,41 @@
+﻿<Window x:Class="WPF_task_new_level_2.FunctionWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_task_new_level_2"
+        mc:Ignorable="d"      
+        Height="Auto" Width="238" SizeToContent="Height"
+        ShowInTaskbar="False">
+    <Grid Margin="2">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Url: " Margin="5" Padding="2" HorizontalAlignment="Center" />
+        <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Padding="2" x:Name="url_textBox" Text="{Binding Url}" />
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Register Date: " Margin="5" Padding="2" HorizontalAlignment="Center" />
+        <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Padding="2" x:Name="date_textBox" Text="{Binding RegisterDate}" />
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Name: " Margin="5" Padding="2" HorizontalAlignment="Center" />
+        <TextBox Grid.Row="2" Grid.Column="1" Margin="5" Padding="2" x:Name="name_textBox" Text="{Binding Name}" />
+
+        <Label Grid.Row="3" Grid.Column="0" Content="Surname: " Margin="5" Padding="2" HorizontalAlignment="Center" />
+        <TextBox Grid.Row="3" Grid.Column="1" Margin="5" Padding="2" x:Name="surname_textBox" Text="{Binding Surname}" />
+
+        <Label Grid.Row="4" Grid.Column="0" Content="Count of friends: " Margin="5" Padding="2" HorizontalAlignment="Center" />
+        <TextBox Grid.Row="4" Grid.Column="1" Margin="5" Padding="2" x:Name="friends_count_textBox" Text="{Binding FriendsCount}" />
+
+        <Button Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" x:Name="button" Click="Button_Click" />
+    </Grid>
+</Window>

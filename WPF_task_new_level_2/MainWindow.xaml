@@ -1,0 +1,40 @@
+﻿<Window x:Class="WPF_task_new_level_2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WPF_task_new_level_2"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="410" Width="540">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <ListView Margin="10 10 10 5" MinHeight="150" MinWidth="300" x:Name="mainListView" ItemsSource="{Binding Path=Table}"
+                  Grid.Row="0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Url">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Path=Url}" TextDecorations="Underline" Foreground="Blue" Cursor="Hand" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=RegisterDate}" Header="Register Date" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Surname}" Header="Surname" />
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=FriendsCount}" Header="Friends count" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <StackPanel Grid.Row="1" Orientation="Horizontal">
+            <Button Content="Отобразить всё" Margin="10" Padding="2" x:Name="select_all_button" Click="Select_all_button_Click" />
+            <Button Content="Создать" Margin="10" Padding="2" x:Name="create_button" Click="Create_button_Click" />
+            <Button Content="Редактировать" Margin="10" Padding="2" x:Name="redact_button" Click="Redact_button_Click" />
+            <Button Content="Удалить" Margin="10" Padding="2" x:Name="delete_buttun" Click="Delete_buttun_Click" />
+            <Button Content="Выборка" Margin="10" Padding="2" x:Name="select_button" Click="Select_button_Click" />
+        </StackPanel>
+    </Grid>
+</Window>
