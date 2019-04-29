@@ -1,18 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ORM;
-using ORM.Exceptions;
 
 namespace WPF_task_new_level_2
 {
@@ -81,8 +69,10 @@ namespace WPF_task_new_level_2
                     return;
                 }
 
-                newProfile = this.Data.Create(newProfile, this.Manager.GetNext(typeof(Profile)));
-                this.Manager.Commit(this.Data);
+                newProfile.Id = this.Manager.GetNextSequenceValue(typeof(Profile));
+                newProfile = this.Data.Create(newProfile);
+                this.Manager.Commit(this.Data, null, true);
+                this.UpdateListView();
             }
             catch (Exception ex)
             {
@@ -94,7 +84,7 @@ namespace WPF_task_new_level_2
         {
             if (this.mainListView.SelectedItem == null)
             {
-                MessageBox.Show("Выберете элемент для редактирования");
+                MessageBox.Show("Выберете элемент для редактирования", "WARNING", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -109,7 +99,7 @@ namespace WPF_task_new_level_2
                 if (window.DialogResult == true)
                 {
                     currProfile.Commit();
-                    this.Manager.Commit(this.Data);
+                    this.Manager.Commit(this.Data, currProfile);
                 }
                 else
                 {
@@ -126,7 +116,7 @@ namespace WPF_task_new_level_2
         {
             if (this.mainListView.SelectedItem == null)
             {
-                MessageBox.Show("Выберете элемент для удаления");
+                MessageBox.Show("Выберете элемент для удаления", "WARNING", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
@@ -135,7 +125,8 @@ namespace WPF_task_new_level_2
             try
             {
                 this.Data.Delete(currProfile);
-                this.Manager.Commit(this.Data);
+                this.Manager.Commit(this.Data, currProfile);
+                this.UpdateListView();
             }
             catch (Exception ex)
             {
@@ -151,9 +142,14 @@ namespace WPF_task_new_level_2
             try
             {
                 window.ShowDialog();
+
+                if(window.DialogResult == false)
+                {
+                    return;
+                }
+
                 condition = window.Condition;
                 this.FillListView(condition);
-
             }
             catch (Exception ex)
             {

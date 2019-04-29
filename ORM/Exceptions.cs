@@ -1,4 +1,5 @@
 ﻿using System;
+using ORM.Attributes;
 
 namespace ORM.Exceptions
 {

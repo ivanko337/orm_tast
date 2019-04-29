@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Data.OracleClient;
 using System.Reflection;
 using System.Collections.Generic;
 using ORM.Attributes;
@@ -78,6 +77,43 @@ namespace ORM
             }
 
             throw new IncorrectTypeException(obj.GetType());
+        }
+        
+        // Составляет условие для выбора элемента для удаления или редактирования.
+        // Условие составляется на основе первичного ключа
+        // При отсутствии свойства, помеченного аттрибутом PrimaryKeyAttribute
+        // возбуждается исключение HaventPrimaryKeyException
+        public static string GetCondition<T>(T obj)
+        {
+            if(obj == null)
+            {
+                return "";
+            }
+
+            string fieldName = "";
+            string fieldValue = "";
+
+            fieldName = GetPrimaryKeyColumnName(typeof(T));
+
+            foreach (PropertyInfo property in typeof(T).GetProperties())
+            {
+                FieldNameAttribute attribute = property.GetCustomAttributes(typeof(FieldNameAttribute), true).FirstOrDefault() as FieldNameAttribute;
+                if (attribute.Name == fieldName)
+                {
+                    fieldValue = property.GetValue(obj, null).ToString();
+                }
+                if (!string.IsNullOrEmpty(fieldName))
+                {
+                    break;
+                }
+            }
+
+            if (string.IsNullOrEmpty(fieldValue))
+            {
+                throw new HaventPrimaryKeyException(typeof(T));
+            }
+
+            return fieldName + " = " + fieldValue;
         }
     }
 }

@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using ORM;
 using ORM.Attributes;
 
@@ -16,7 +13,7 @@ namespace WPF_task_new_level_2
         public decimal Id { get; set; }
 
         [FieldName("PROFILE_URL")]
-        public string Url { get; set; }
+        public string Url { get; set; } = "https://vk.com/";
 
         [FieldName("REGISTER_DATE")]
         public DateTime? RegisterDate { get; set; } = null;

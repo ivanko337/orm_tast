@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Windows.Forms;
 using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using System.Data.OracleClient;
-using ORM.Exceptions;
 using ORM.Attributes;
 
 namespace ORM
@@ -41,7 +39,7 @@ namespace ORM
                 connection.Close();
             }
 
-            return new DatabaseData<T>(dataSet, new OracleCommandBuilder(resultAdapter), resultAdapter, resConnection);
+            return new DatabaseData<T>(dataSet);
         }
 
         private string GetUpdateCommand<T>(DataRow row) where T : DatabaseObject, new()
@@ -62,19 +60,29 @@ namespace ORM
             return query;
         }
 
-        public void Commit<T>(DatabaseData<T> data) where T : DatabaseObject, new()
+        public void Commit<T>(DatabaseData<T> data, T condObj, bool isCreate = false) where T : DatabaseObject, new()
         {
             string tableName = Functions.GetTableName(typeof(T));
-            string query = "SELECT * FROM " + tableName;
+            string query = "SELECT * FROM " + tableName + " WHERE " + Functions.GetCondition(condObj);
 
-            data.Connection.ConnectionString = this.ConnectionString;
-            data.Connection.Open();
-            data.Adapter.SelectCommand = new OracleCommand(query, data.Connection);
-            data.Adapter.Update(data.Data, tableName);
-            data.Connection.Close();
+            if(isCreate)
+            {
+                query += " ROWNUM = 1";
+            }
+
+            using (OracleConnection connection = new OracleConnection(this.ConnectionString))
+            {
+                connection.Open();
+
+                OracleDataAdapter adapter = new OracleDataAdapter(query, connection);
+                OracleCommandBuilder builder = new OracleCommandBuilder(adapter);
+                adapter.Update(data.Data, tableName);
+
+                connection.Close();
+            }
         }
 
-        public decimal GetNext(Type type)
+        public decimal GetNextSequenceValue(Type type)
         {
             SequenceNameAttribute sequenceAttribute = type.GetCustomAttributes(typeof(SequenceNameAttribute), true).FirstOrDefault() as SequenceNameAttribute;
             string sequenceName = sequenceAttribute.Name;
