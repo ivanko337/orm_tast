@@ -39,7 +39,6 @@ namespace ORM
         public T Create(T obj)
         {
             DataRow newRow = this.Data.Tables[this.TableName].NewRow();
-            string primaryKey = Functions.GetPrimaryKeyColumnName(typeof(T));
 
             obj.Row = newRow;
             obj.Commit();
